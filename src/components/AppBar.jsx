@@ -7,7 +7,7 @@ const AppBar = () => {
     <Container disableGutters sx={{display:'flex',justifyContent:'space-between',height:'60px',borderBottom:'1px solid #1C4E80',position:'relative',zIndex:'2',paddingX:'18px'}}>
         <Box sx={{alignItems:'center',display:'flex',gap:'6px'}}>
 
-          <Box sx={{display:'flex',borderRadius:'50%',bgcolor:'#088395',width:'29px',height:'35px',alignItems:'center',justifyContent:'center'}}>
+          <Box sx={{display:'flex',borderRadius:'50%',bgcolor:'#088395',width:'35px',height:'35px',alignItems:'center',justifyContent:'center'}}>
             <Typography variant='p' sx={{textAlign:'center',color:'white',fontFamily:'roboto'}}>L</Typography>
           </Box>
           <Box>

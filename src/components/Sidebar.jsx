@@ -15,6 +15,7 @@ import GroupsIcon from '@mui/icons-material/Groups';
 import SettingsIcon from '@mui/icons-material/Settings';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import { NavLink } from 'react-router-dom';
+import { useState } from 'react';
 
 const drawerWidth = 220;
 
@@ -29,15 +30,21 @@ export default function PermanentDrawerLeft() {
 
   const secondaryData = [
 
-    {title:'Settings',icon:<SettingsIcon/>},
-    {title:'Manage Accounts',icon:<ManageAccountsIcon/>}
+    {index: 3,title:'Settings',icon:<SettingsIcon/>},
+    {index: 4,title:'Manage Accounts',icon:<ManageAccountsIcon/>}
   ]
+
+  const [selected,setSelected] = useState(0)
+
+  const handleListItemClick = (index) => {
+    setSelected(index);
+  };
 
 
   return (
 
     
-    <Container disableGutters sx={{position:'relative',zIndex:'0'}}>
+    <Container disableGutters sx={{position:'relative',zIndex:'1'}}>
       <CssBaseline />
       <Drawer
         sx={{
@@ -56,9 +63,30 @@ export default function PermanentDrawerLeft() {
 
 <List sx={{display:'flex',flexDirection:'column',gap:'18px'}}>
   {mainData.map((text, index) => (
-    <NavLink style={{ textDecoration: 'none', color: 'black' }} to={text.title === 'Dashboard' ? '/' : `/${text.title}`}>
+    <NavLink style={{ textDecoration: 'none', color: '#082431' }} to={text.title === 'Dashboard' ? '/' : `/${text.title}`}>
       <ListItem key={index} disablePadding>
-      <ListItemButton>
+      <ListItemButton sx={{":hover":{bgcolor:'rgba(8, 131, 149, 0.1)'},bgcolor: selected === index ? 'rgba(8, 131, 149, 0.2)' : 'transparent','&::after': {
+          content: '""',
+          display: 'block',
+          position: 'absolute',
+          left: 0,
+          top: 0,
+          width: '100%',
+          height: '100%',
+          opacity: 0,
+          transition: 'all 0.5s',
+          boxShadow: '0 0 10px 10px rgba(8, 131, 149, 0.1)',
+        },
+
+        '&:active::after': {
+          boxShadow: '0 0 0 0 rgba(8, 131, 149, 0.1)',
+          position: 'absolute',
+          borderRadius: '5px',
+          left: 0,
+          top: 0,
+          opacity: 1,
+          transition: '0s',
+        },}} onClick={() => handleListItemClick(index)}>
         <ListItemIcon>
           {text.icon}
         </ListItemIcon>
@@ -71,16 +99,37 @@ export default function PermanentDrawerLeft() {
 </List>
 <Typography sx={{color:'#082431',opacity:'50%',paddingLeft:'18px',fontFamily:'roboto'}}>SETTINGS</Typography>
 <List sx={{display:'flex',flexDirection:'column',gap:'18px'}}>
-  {secondaryData.map((text, index) => (
-    <NavLink to='*' style={{ textDecoration: 'none', color: 'black' }}>
+  {secondaryData.map((text) => (
+    <NavLink to='*' style={{ textDecoration: 'none', color: '#082431' }}>
 
-      <ListItem key={index} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {text.icon}
-              </ListItemIcon>
-              <ListItemText primary={text.title} />
-            </ListItemButton>
+      <ListItem key={text.index} disablePadding>
+            <ListItemButton sx={{":hover":{bgcolor:'rgba(8, 131, 149, 0.1)'},bgcolor: selected === text.index ? 'rgba(8, 131, 149, 0.2)' : 'transparent','&::after': {
+          content: '""',
+          display: 'block',
+          position: 'absolute',
+          left: 0,
+          top: 0,
+          width: '100%',
+          height: '100%',
+          opacity: 0,
+          transition: 'all 0.5s',
+          boxShadow: '0 0 10px 10px rgba(8, 131, 149, 0.1)',
+        },
+
+        '&:active::after': {
+          boxShadow: '0 0 0 0 rgba(8, 131, 149, 0.1)',
+          position: 'absolute',
+          borderRadius: '5px',
+          left: 0,
+          top: 0,
+          opacity: 1,
+          transition: '0s',
+        },}} onClick={() => handleListItemClick(text.index)}>
+        <ListItemIcon>
+          {text.icon}
+        </ListItemIcon>
+        <ListItemText primary={text.title} />
+      </ListItemButton>
       </ListItem>
 
     </NavLink>

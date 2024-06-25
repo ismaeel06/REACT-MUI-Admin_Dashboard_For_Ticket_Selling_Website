@@ -3,7 +3,7 @@ import { Box, Container,Typography } from '@mui/material'
 
 const EventsPage = () => {
   return (
-    <Container disableGutters sx={{marginLeft:'230px'}}>
+    <Container disableGutters sx={{ marginLeft: '230px', width: `calc(100% - 230px)` }}>
       <Box>
         <Typography variant='h1'>Events</Typography>
       </Box>
