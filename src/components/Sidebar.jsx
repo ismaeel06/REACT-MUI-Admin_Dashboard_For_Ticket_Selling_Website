@@ -30,8 +30,8 @@ export default function PermanentDrawerLeft() {
 
   const secondaryData = [
 
-    {path: '/Settings',title:'Settings',icon:<SettingsIcon/>},
-    {path: '/Accounts',title:'Manage Accounts',icon:<ManageAccountsIcon/>}
+    {index: 3 ,path: '/Settings',title:'Settings',icon:<SettingsIcon/>},
+    {index: 4 ,path: '/Accounts',title:'Manage Accounts',icon:<ManageAccountsIcon/>}
   ]
 
   const isPathActive = (path) => location.pathname === path;
@@ -127,7 +127,7 @@ export default function PermanentDrawerLeft() {
           top: 0,
           opacity: 1,
           transition: '0s',
-        },}} onClick={() => handleListItemClick(index)}>
+        },}} onClick={() => handleListItemClick(text.index)}>
         <ListItemIcon>
           {text.icon}
         </ListItemIcon>
@@ -139,9 +139,6 @@ export default function PermanentDrawerLeft() {
     
   ))}
 </List>
-
-
-
 
         </Box>
         
