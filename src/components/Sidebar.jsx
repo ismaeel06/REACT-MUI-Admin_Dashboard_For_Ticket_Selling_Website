@@ -68,7 +68,7 @@ export default function PermanentDrawerLeft() {
     style={{ textDecoration: 'none', color: '#082431' }}
     to={text.path}>
       <ListItem key={index} disablePadding>
-      <ListItemButton sx={{":hover":{bgcolor:'rgba(8, 131, 149, 0.1)'}, bgcolor: isPathActive(text.path) ?  'rgba(8, 131, 149, 0.1)' : 'transparent','&::after': {
+      <ListItemButton sx={{":hover":{bgcolor:'rgba(8, 131, 149, 0.1)'}, bgcolor: isPathActive(text.path) ?  'rgba(8, 131, 149, 0.2)' : 'transparent','&::after': {
           content: '""',
           display: 'block',
           position: 'absolute',
@@ -106,7 +106,7 @@ export default function PermanentDrawerLeft() {
     <NavLink to={text.path} style={{ textDecoration: 'none', color: '#082431' }}>
 
       <ListItem key={index} disablePadding>
-            <ListItemButton sx={{":hover":{bgcolor:'rgba(8, 131, 149, 0.1)'},bgcolor: isPathActive(text.path) ? 'rgba(8, 131, 149, 0.1)' : 'transparent','&::after': {
+            <ListItemButton sx={{":hover":{bgcolor:'rgba(8, 131, 149, 0.1)'},bgcolor: isPathActive(text.path) ? 'rgba(8, 131, 149, 0.2)' : 'transparent','&::after': {
           content: '""',
           display: 'block',
           position: 'absolute',

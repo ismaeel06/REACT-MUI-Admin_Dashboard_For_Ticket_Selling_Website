@@ -4,7 +4,7 @@ import ArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 
 const AppBar = () => {
   return (
-    <Container disableGutters sx={{display:'flex',justifyContent:'space-between',height:'60px',borderBottom:'1px solid #1C4E80',position:'relative',zIndex:'2',paddingX:'18px'}}>
+    <Container disableGutters sx={{display:'flex',justifyContent:'space-between',height:'60px',borderBottom:'1px solid #1C4E80',position:'sticky',top:'0px',zIndex:'2',paddingX:'18px',bgcolor:'rgba(255, 255, 255, 0.9)'}}>
         <Box sx={{alignItems:'center',display:'flex',gap:'6px'}}>
 
           <Box sx={{display:'flex',borderRadius:'50%',bgcolor:'#088395',width:'35px',height:'35px',alignItems:'center',justifyContent:'center'}}>
