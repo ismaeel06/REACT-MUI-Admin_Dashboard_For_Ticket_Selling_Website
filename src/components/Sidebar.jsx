@@ -34,12 +34,12 @@ export default function PermanentDrawerLeft() {
     {path: '/Accounts',title:'Manage Accounts',icon:<ManageAccountsIcon/>}
   ]
 
-  const [selected,setSelected] = useState(null)
   const isPathActive = (path) => location.pathname === path;
 
- const handleListItemClick = (index) => {
-   setSelected(index);
- };
+  const [selected,setSelected] = useState(null)                  // Code to be optimized later
+  const handleListItemClick = (index) => {                       // Logical Confusion regarding why I still need this function
+    setSelected(index);                                          // as selected state is not used anywhere in the code.
+  };
 
 
 
