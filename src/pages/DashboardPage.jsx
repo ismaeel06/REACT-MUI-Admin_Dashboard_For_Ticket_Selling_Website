@@ -77,7 +77,7 @@ const LineOptions = {
       display: false,
     },
     title: {
-      display: true,
+      display: false,
       text: 'Tickets Sold By Month',
       position: 'top',
       align: 'center',
@@ -267,8 +267,8 @@ const TotalRevenueOptions = {
     </Box>
 
 
-    <Box sx={{}}>
-    <Typography variant='p' sx={{paddingBottom:'5px',paddingLeft:'10px',fontFamily:'Roboto',color:'#071952',fontSize:'1.8rem'}}>Tickets Sold</Typography>
+    <Box>
+    <Typography variant='p' sx={{paddingBottom:'5px',paddingLeft:'20px',fontFamily:'Roboto',color:'#071952',fontSize:'1.8rem'}}>Tickets Sold By Month</Typography>
     <Box sx={{display:'flex',gap:'20px',justifyContent:'space-between',paddingRight:'20px',paddingLeft:'10px'}}>
 
       <TicketSellGraph data = {LineData} options = {LineOptions}/>
