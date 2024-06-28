@@ -13,29 +13,29 @@ import DoneIcon from '@mui/icons-material/Done';
 import CloseIcon from '@mui/icons-material/Close';
 
 const columns = [
-  { id: 'name', label: 'EventName', minWidth: 120 },
-  { id: 'organizer', label: 'Organizer', minWidth: 70 },
+  { id: 'id', label: 'ID', minWidth: 120 },
+  { id: 'organizerName', label: 'Organizer Name', minWidth: 70 },
   {
-    id: 'venue',
-    label: 'Venue',
+    id: 'event',
+    label: 'Flagship Event',
     minWidth: 170,
     align: 'left',
   },
   {
-    id: 'genre',
-    label: 'Genre',
+    id: 'email',
+    label: 'Email',
     minWidth: 60,
     align: 'left',
   },
   {
-    id: 'date',
-    label: 'Date',
+    id: 'phone',
+    label: 'Phone No.',
     minWidth: 60,
     align: 'center',
   },
   {
-    id: 'totalTickets',
-    label: 'Total Tickets',
+    id: 'budget',
+    label: 'Budget',
     minWidth: 120,
     align: 'center',
   },
@@ -49,26 +49,26 @@ const columns = [
   
 ];
 
-function createData(name, organizer, venue, genre, date, totalTickets, request) {
-  return { name, organizer, venue, genre, date, totalTickets, request };
+function createData(id,organizerName, event, email, phone, budget, request) {
+  return { id,organizerName,  event, email, phone, budget, request };
 }
 
 const rows = [
-  createData('International Malam Jabba Ski Tournement', 'Malam Jabba Ski Resort', 'Malam Jabba, Swat','Sports', '26/4/24', 12000, ),
-  createData('International Naltar Ski Tournament', 'Naltar Ski Resort', 'Naltar Valley, Gilgit','Sports', '26/4/24', 9000, ),
-  createData('Spring Blossom Festival', 'GB Ministry', "Gilgit Baltistan", 'Exhibition', '26/4/24', 4500, ),
-  createData('International Silk Route Festival', 'GB Ministry', "Karakoram, Gilgit Baltistan", "Exhibition", '26/4/24', 5000, ),
-  createData('TasteFest', 'Coca Cola', "Islamabad", "Music/Food", '26/4/24', 15000, ),
-  createData('FoodMela', 'National Foods', "Karachi", "Food", '26/4/24', 18000,),
-  createData('Asim Azhar Concert', 'Asim Azhar', "Lahore","Music", '26/4/24', 12000,),
-  createData('Event Name', 'Organizer', 'Venue', 'Genre', '26/4/24', 16000,),
-  createData('Event Name', 'Organizer', 'Venue', 'Genre', '26/4/24', 16000,),
-  createData('Event Name', 'Organizer', 'Venue', 'Genre', '26/4/24', 16000,),
-  createData('Event Name', 'Organizer', 'Venue', 'Genre', '26/4/24', 16000,),
-  createData('Event Name', 'Organizer', 'Venue', 'Genre', '26/4/24', 16000,),
-  createData('Event Name', 'Organizer', 'Venue', 'Genre', '26/4/24', 16000,),
-  createData('Event Name', 'Organizer', 'Venue', 'Genre', '26/4/24', 16000,),
-  createData('Event Name', 'Organizer', 'Venue', 'Genre', '26/4/24', 6000,),
+  createData('124418', 'Malam Jabba Ski Resort', 'Int. Ski Competition','abc@xyz.com', '0234-9876543', 12000, ),
+  createData('122312', 'Naltar Ski Resort', 'Int. Ski Competition','abc@xyz.com', '0234-9876543', 9000, ),
+  createData('145321', 'GB Ministry', "Spring Blossom Festival", 'abc@xyz.com', '0234-9876543', 4500, ),
+  createData('178892', 'GB Ministry', "International Silk Route ", "abc@xyz.com", '0234-9876543', 5000, ),
+  createData('164231', 'Coca Cola', "Taste Fest", "abc@xyz.com", '0234-9876543', 15000, ),
+  createData('116743', 'National Foods', "Food Mela", "abc@xyz.com", '0234-9876543', 18000,),
+  createData('109675', 'Asim Azhar', "Concert","abc@xyz.com", '0234-9876543', 12000,),
+  createData('166543', 'Organizer', 'Venue', 'abc@xyz.com', '0234-9876543', 16000,),
+  createData('177432', 'Organizer', 'Venue', 'abc@xyz.com', '0234-9876543', 16000,),
+  createData('143323', 'Organizer', 'Venue', 'abc@xyz.com', '0234-9876543', 16000,),
+//   createData('Event Name', 'Organizer', 'Venue', 'Genre', '26/4/24', 16000,),
+//   createData('Event Name', 'Organizer', 'Venue', 'Genre', '26/4/24', 16000,),
+//   createData('Event Name', 'Organizer', 'Venue', 'Genre', '26/4/24', 16000,),
+//   createData('Event Name', 'Organizer', 'Venue', 'Genre', '26/4/24', 16000,),
+//   createData('Event Name', 'Organizer', 'Venue', 'Genre', '26/4/24', 6000,),
 ];
 
 export default function StickyHeadTable() {
@@ -86,7 +86,7 @@ export default function StickyHeadTable() {
 
   return (
     <Container disableGutters>
-      <Typography variant='p' sx={{paddingBottom:'5px',paddingLeft:'10px',fontFamily:'Roboto',color:'#071952',fontSize:'1.8rem'}}>Event Requests</Typography>
+      <Typography variant='p' sx={{paddingBottom:'5px',paddingLeft:'10px',fontFamily:'Roboto',color:'#071952',fontSize:'1.8rem'}}>Organizer Requests</Typography>
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
       <TableContainer sx={{ maxHeight: 440 }}>
         <Table stickyHeader aria-label="sticky table">
