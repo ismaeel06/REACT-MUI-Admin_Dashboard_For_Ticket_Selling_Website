@@ -14,6 +14,7 @@ import CelebrationIcon from '@mui/icons-material/Celebration';
 import GroupsIcon from '@mui/icons-material/Groups';
 import SettingsIcon from '@mui/icons-material/Settings';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
 import { NavLink } from 'react-router-dom';
 import { useState} from 'react';
 const drawerWidth = 220;
@@ -25,13 +26,14 @@ export default function PermanentDrawerLeft() {
 
     {title:'Dashboard',icon:<DashboardIcon/>,path:'/'},
     {title:'Events',icon:<CelebrationIcon/>,path:'/Events'},
-    {title:'Organizers',icon:<GroupsIcon/>,path:'/Organizers'}
+    {title:'Organizers',icon:<GroupsIcon/>,path:'/Organizers'},
+    {title:'Users',icon:<EmojiPeopleIcon/>,path:'/Users'}
   ]
 
   const secondaryData = [
 
     {index: 3 ,path: '/Settings',title:'Settings',icon:<SettingsIcon/>},
-    {index: 4 ,path: '/Accounts',title:'Manage Accounts',icon:<ManageAccountsIcon/>}
+    // {index: 4 ,path: '/Accounts',title:'Manage Accounts',icon:<ManageAccountsIcon/>}
   ]
 
   const isPathActive = (path) => location.pathname === path;

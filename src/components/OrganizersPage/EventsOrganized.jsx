@@ -1,5 +1,5 @@
 
-import * as React from 'react';
+import React, { useContext,useEffect } from 'react';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -9,6 +9,9 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import { Container, Typography } from '@mui/material';
+import FilteredRowsContext from '../../context/FilteredRowsContext';
+
+
 
 const columns = [
   { id: 'name', label: 'EventName', minWidth: 120 },
@@ -71,6 +74,16 @@ export default function StickyHeadTable(props) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
+  const { setFilteredRows } = useContext(FilteredRowsContext);
+
+  useEffect(() => {
+    // Assuming you have a way to calculate filteredRows within this component
+    const filteredRows = rows.filter(row => row.organizer === props.state);
+    setFilteredRows(filteredRows);
+  }, [props.state]);
+  
+
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -81,6 +94,7 @@ export default function StickyHeadTable(props) {
   };
 
   const filteredRows = rows.filter(row => row.organizer === props.state);
+  console.log(filteredRows.length);
 
   return (
     <Container disableGutters>

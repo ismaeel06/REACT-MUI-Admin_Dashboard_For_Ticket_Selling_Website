@@ -3,10 +3,12 @@ import { Box, Container,Typography,Tabs,Tab } from '@mui/material'
 import OrganizersCard from '../components/OrganizersPage/OrganizersCard'
 import OrganizersRequests from '../components/OrganizersPage/OrganizerRequests'
 import EventsOrganized from '../components/OrganizersPage/EventsOrganized'
+import FilteredRowsContext from '../context/FilteredRowsContext'
 
 const OrganizersPage = () => {
 
   const [selectedOrganizer, setSelectedOrganizer] = useState('')
+  const [filteredRows, setFilteredRows] = useState([]);
 
     const handleChange = (event) => {
         setSelectedOrganizer(event.target.value);
@@ -19,12 +21,13 @@ const OrganizersPage = () => {
   };
 
   return (
+    <FilteredRowsContext.Provider value={{filteredRows, setFilteredRows}}>
     <Container disableGutters sx={{bgcolor:'#EBF4F6',paddingLeft: '230px',display:'flex',flexDirection:'column',gap:'100px'}}>
       <Box sx={{display:'flex',justifyContent:'space-between',paddingRight:'20px',paddingTop:'20px',gap:'30px',paddingLeft:'10px'}}> 
 
         <OrganizersCard icon='/images/OrganizersOnboardIcon.svg' title='Organizers Onboard' value='16' image='/images/OrganizersOnboard.svg'/>
 
-        <OrganizersCard icon='/images/EventsOrganizedByOrganizerIcon.svg' title='Events Organized By' value='8' state = {selectedOrganizer} function = {handleChange} />
+        <OrganizersCard icon='/images/EventsOrganizedByOrganizerIcon.svg' title='Events Organized By' state = {selectedOrganizer} function = {handleChange} />
 
       </Box>
 
@@ -56,6 +59,7 @@ const OrganizersPage = () => {
       
       
    </Container>
+   </FilteredRowsContext.Provider>
   )
 }
 
