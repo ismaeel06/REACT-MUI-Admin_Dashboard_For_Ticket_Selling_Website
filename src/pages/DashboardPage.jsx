@@ -1,12 +1,16 @@
-import React from 'react'
+import React,{useState} from 'react'
 import { Box, Container,Typography } from '@mui/material'
 import DashboardCardBig from '../components/Dashboard/Cards/DashboardCardBig'
 import DashboardCardSmall from '../components/Dashboard/Cards/DashboardCardSmall'
 import TicketSellDonutChart from '../components/Dashboard/Cards/DashboardTicketSellDonutChart'
 import TicketSellGraph from '../components/Dashboard/Cards/DashboardTicketSellGraph'
 import UpcomingEvents from '../components/Dashboard/DashboardUpcomingEvents'
+import TotalActiveUsersContext from '../context/TotalActiveUsersContext'
 
 const DashboardPage = () => {
+
+  const [numUsers,setNumUsers] = useState(0);
+
 
 const DoughnutData = {
   labels: ['Sold','Remaining'],
@@ -249,7 +253,10 @@ const TotalRevenueOptions = {
 
     <Box sx={{display:'flex',justifyContent:'space-between',paddingRight:'10px',paddingTop:'20px',gap:'20px'}}> 
 
-      <DashboardCardBig image='/images/TotalUsers.svg' title='Total Users' value='36,000' data = {TotalUserData} options = {TotalUserOptions}/>
+
+    {/* <TotalActiveUsersContext.Provider value={{numUsers,setNumUsers}}> */}
+      <DashboardCardBig image='/images/TotalUsers.svg' title='Total Users' data = {TotalUserData} options = {TotalUserOptions}/>
+    {/* </TotalActiveUsersContext.Provider> */}
 
       <DashboardCardBig image='/images/TotalRevenue.svg' title='Total Revenue' value='86,000' data = {TotalRevenueData} options = {TotalRevenueOptions}/>
 
@@ -286,6 +293,7 @@ const TotalRevenueOptions = {
     
       
    </Container>
+
   )
 }
 

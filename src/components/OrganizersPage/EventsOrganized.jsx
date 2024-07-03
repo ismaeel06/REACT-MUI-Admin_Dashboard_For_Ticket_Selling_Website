@@ -55,7 +55,7 @@ function createData(name, organizer, venue, genre, date, ticketsSold) {
 const rows = [
   createData('International Malam Jabba Ski Tournement', 'Malam Jabba Ski Resort', 'Malam Jabba, Swat','Sports', '26/3/24', 7654),
   createData('International Naltar Ski Tournament', 'Naltar Ski Resort', 'Naltar Valley, Gilgit','Sports', '26/3/24', 5422),
-  createData('Spring Blossom Festival', 'GB Ministry', "Gilgit Baltistan", 'Exhibition', 4500, 2600),
+  createData('Spring Blossom Festival', 'GB Ministry', "Gilgit Baltistan", 'Exhibition', '26/3/24', 2600),
   createData('International Silk Route Festival', 'GB Ministry', "Karakoram, Gilgit Baltistan", "Exhibition", '26/3/24', 3200),
   createData('TasteFest', 'Coca Cola', "Islamabad", "Music/Food", '26/3/24', 13800),
   createData('FoodMela', 'National Foods', "Karachi", "Food", '26/3/24',17200),
