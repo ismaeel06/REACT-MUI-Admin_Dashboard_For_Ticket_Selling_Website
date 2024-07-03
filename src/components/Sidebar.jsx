@@ -13,7 +13,6 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import CelebrationIcon from '@mui/icons-material/Celebration';
 import GroupsIcon from '@mui/icons-material/Groups';
 import SettingsIcon from '@mui/icons-material/Settings';
-import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
 import { NavLink } from 'react-router-dom';
 import { useState} from 'react';
@@ -35,7 +34,7 @@ export default function PermanentDrawerLeft() {
     {index: 4 ,path: '/Settings',title:'Settings',icon:<SettingsIcon/>},
   ]
 
-  const isPathActive = (path) => location.pathname === path;
+  const isPathActive = (path) => window.location.pathname === path;
 
   const [selected,setSelected] = useState(null)                  // Code to be optimized later
   const handleListItemClick = (index) => {                       // Logical Confusion regarding why I still need this function
