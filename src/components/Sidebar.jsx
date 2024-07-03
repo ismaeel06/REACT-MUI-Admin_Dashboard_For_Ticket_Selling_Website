@@ -32,8 +32,7 @@ export default function PermanentDrawerLeft() {
 
   const secondaryData = [
 
-    {index: 3 ,path: '/Settings',title:'Settings',icon:<SettingsIcon/>},
-    // {index: 4 ,path: '/Accounts',title:'Manage Accounts',icon:<ManageAccountsIcon/>}
+    {index: 4 ,path: '/Settings',title:'Settings',icon:<SettingsIcon/>},
   ]
 
   const isPathActive = (path) => location.pathname === path;
