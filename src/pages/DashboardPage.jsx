@@ -5,7 +5,6 @@ import DashboardCardSmall from '../components/Dashboard/Cards/DashboardCardSmall
 import TicketSellDonutChart from '../components/Dashboard/Cards/DashboardTicketSellDonutChart'
 import TicketSellGraph from '../components/Dashboard/Cards/DashboardTicketSellGraph'
 import UpcomingEvents from '../components/Dashboard/DashboardUpcomingEvents'
-import TotalActiveUsersContext from '../context/TotalActiveUsersContext'
 
 const DashboardPage = () => {
 
@@ -254,9 +253,7 @@ const TotalRevenueOptions = {
     <Box sx={{display:'flex',justifyContent:'space-between',paddingRight:'10px',paddingTop:'20px',gap:'20px'}}> 
 
 
-    {/* <TotalActiveUsersContext.Provider value={{numUsers,setNumUsers}}> */}
       <DashboardCardBig image='/images/TotalUsers.svg' title='Total Users' data = {TotalUserData} options = {TotalUserOptions}/>
-    {/* </TotalActiveUsersContext.Provider> */}
 
       <DashboardCardBig image='/images/TotalRevenue.svg' title='Total Revenue' value='86,000' data = {TotalRevenueData} options = {TotalRevenueOptions}/>
 

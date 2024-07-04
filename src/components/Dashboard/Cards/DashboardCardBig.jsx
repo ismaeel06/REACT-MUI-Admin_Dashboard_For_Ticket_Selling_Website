@@ -1,6 +1,6 @@
-import React,{useContext} from 'react'
+import React from 'react'
 import {Container,Box,Typography} from '@mui/material'
-import TotalActiveUsersContext from '../../../context/TotalActiveUsersContext'
+import { useSelector } from 'react-redux'
 
 import {Line} from 'react-chartjs-2'
 
@@ -15,8 +15,10 @@ import {Chart as ChartJS,
 ChartJS.register(LineElement,CategoryScale,LinearScale,PointElement,Tooltip,Title);
 
 const DashboardCardBig = (props) => {
-  const contextValue = useContext(TotalActiveUsersContext);
-  const numUsers = contextValue ? contextValue.numUsers : null; // Safely access numUsers
+
+
+  const numUsers = useSelector((state) => state.activeUsers.count);
+  
   return (
     <Container disableGutters sx={{display:'flex',borderRadius:'20px', width:'50%',height:'220px',bgcolor:'white',justifyContent:'space-between',paddingX:'15px'}}>
 

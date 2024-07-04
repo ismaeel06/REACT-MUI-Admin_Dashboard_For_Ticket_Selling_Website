@@ -1,72 +1,17 @@
-import {useMemo,useState,useEffect,useContext } from 'react';
+import {useMemo } from 'react';
 import {
   MaterialReactTable,
   useMaterialReactTable,
 } from 'material-react-table';
 import IconButton from '@mui/material/IconButton';
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
-import TotalActiveUsersContext from '../../context/TotalActiveUsersContext';
 import { Container } from '@mui/material';
-import { useUsers } from '../../context/UsersDataContext';
+import { useSelector } from 'react-redux';
+import { selectUsers } from '../../app/slices/usersTableSlice';
 
-export const Data = [
-  {
-  
-    firstName: 'John',
-    lastName: 'Doe',
-    address: '261 Erdman Ford',
-    city: 'East Daphne',
-    state: 'Kentucky',
-    email:'abc@xyz.com',
-    
-    
-  },
-  {
-    
-    firstName: 'Jane',
-    lastName: 'Doe',
-    address: '769 Dominic Grove',
-    city: 'Columbus',
-    state: 'Ohio',
-    email:'abc@xyz.com'
-  },
-  {
-    firstName: 'Joe',
-    lastName: 'Doe',
-    address: '566 Brakus Inlet',
-    city: 'South Linda',
-    state: 'West Virginia',
-    email:'abc@xyz.com'
-  },
-  {
-    
-    firstName: 'Kevin',
-    lastName: 'Vandy',
-    address: '722 Emie Stream',
-    city: 'Lincoln',
-    state: 'Nebraska',
-    email:'abc@xyz.com'
-  },
-  {
-    
-    firstName: 'Joshua',
-    lastName: 'Rolluffs',
-    address: '32188 Larkin Turnpike',
-    city: 'Charleston',
-    state: 'South Carolina',
-    email:'abc@xyz.com'
-  },
-];
 
 const Example = (props) => {
-  const { users } = useUsers();
-
-  const { setNumUsers } = useContext(TotalActiveUsersContext);
-
-  useEffect(() => {
-    const activeUsers = users.length;
-    setNumUsers(activeUsers);
-  }, [users]);
+  const  users  = useSelector(selectUsers);
 
   //should be memoized or stable
   const columns = useMemo(
@@ -74,27 +19,27 @@ const Example = (props) => {
       {
         accessorKey: 'firstName', //access nested data with dot notation
         header: 'First Name',
-        size: 100,
+        size: 80,
       },
       {
         accessorKey: 'lastName',
         header: 'Last Name',
-        size: 100,
+        size: 80,
       },
       {
         accessorKey: 'address', //normal accessorKey
         header: 'Address',
-        size: 170,
+        size: 120,
       },
       {
         accessorKey: 'city',
         header: 'City',
-        size: 150,
+        size: 100,
       },
       {
         accessorKey: 'state',
         header: 'State',
-        size: 150,
+        size: 100,
       },
       {
         accessorKey: 'email',
@@ -104,7 +49,7 @@ const Example = (props) => {
       {
         accessorKey: 'remove',
         header: 'Remove',
-        size: 60,
+        size: 40,
         enableSorting: false,
         enableColumnActions: false,
         Cell: ({ row }) => (

@@ -4,7 +4,6 @@ import TotalActiveUsers from '../components/UsersPage/TotalActiveUsers'
 import GenderRatioDoughnut from '../components/UsersPage/GenderRatioDoughnut'
 import ManageUsers from '../components/UsersPage/ManageUsers'
 import AddUsers from '../components/UsersPage/AddUsers'
-import { UsersDataProvider } from '../context/UsersDataContext'
 
 
 const UsersPage = () => {
@@ -79,7 +78,7 @@ const UsersPage = () => {
             <Tab label="Manage Users" sx={{'&.Mui-selected': { color: '#071952' }}}/>
             <Tab label="Add User" sx={{'&.Mui-selected': { color: '#071952' }}}/>
           </Tabs>
-          <UsersDataProvider>
+
           {active === 0 && (
 
             <Box sx={{ paddingRight: '20px', paddingLeft: '10px' }}>
@@ -87,6 +86,7 @@ const UsersPage = () => {
             </Box>
 
           )}
+          
           {active === 1 && (
         
             <Box sx={{ paddingRight: '20px', paddingLeft: '10px' }}>
@@ -94,7 +94,6 @@ const UsersPage = () => {
             </Box>
         
           )}
-          </UsersDataProvider>
         
       </Box>
 

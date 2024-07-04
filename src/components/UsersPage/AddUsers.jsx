@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { Container, Box, Button, TextField, Alert } from '@mui/material';
-import { useUsers } from '../../context/UsersDataContext';
+import { useDispatch } from 'react-redux';
+import { addUser } from '../../app/slices/usersTableSlice';
 
 const AddUsers = () => {
-  const { addUser } = useUsers();
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -35,8 +36,8 @@ const AddUsers = () => {
       setAlertSeverity('error');
       return;
     }
-    console.log(formData); // Process the form data as needed
-    addUser(formData); // Add user to context
+    else {
+    dispatch(addUser(formData));
     // Reset form if necessary
     setFormData({
       firstName: '',
@@ -46,6 +47,7 @@ const AddUsers = () => {
       state: '',
       email: ''
     });
+  }
     // Show success message
     setShowAlert(true);
     setAlertMessage('User Added Successfully');

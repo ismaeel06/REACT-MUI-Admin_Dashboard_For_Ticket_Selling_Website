@@ -1,10 +1,10 @@
 import React,{useContext} from 'react'
 import { Box, Container,Typography } from '@mui/material'
-import TotalActiveUsersContext from '../../context/TotalActiveUsersContext'
+import { useSelector } from 'react-redux'
 
 const TotalActiveUsers = (props) => {
 
-  const {numUsers} = useContext(TotalActiveUsersContext);
+   const numUsers = useSelector((state) => state.activeUsers.count);
 
   return (
 

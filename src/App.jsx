@@ -1,6 +1,6 @@
 
 import './App.css'
-import React,{useState} from 'react'
+import React from 'react'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import DashboardPage from './pages/DashboardPage'
 import EventsPage from './pages/EventsPage'
@@ -8,16 +8,26 @@ import OrganizersPage from './pages/OrganizersPage'
 import Layout from './pages/Layout'
 import NoPage from './pages/NoPage'
 import UsersPage from './pages/UsersPage'
-import TotalActiveUsersContext from './context/TotalActiveUsersContext'
 import SettingsPage from './pages/SettingsPage';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
+import { useSelector,useDispatch } from 'react-redux';
+import { selectUsers } from './app/slices/usersTableSlice';
+import { setActiveUsersCount } from './app/slices/activeUsersSlice';
+import { useEffect } from 'react';
 
 function App() {
-  const [numUsers,setNumUsers] = useState(0);
+
+  const  users  = useSelector(selectUsers);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const activeUsers = users.length;
+    dispatch(setActiveUsersCount(activeUsers));
+  }, [users.length]);
 
   return (
-    <TotalActiveUsersContext.Provider value={{numUsers,setNumUsers}}>
     <BrowserRouter>
       <Routes>
         <Route path="SignIn" element={<SignIn />} />
@@ -32,7 +42,6 @@ function App() {
         </Route>
       </Routes>
     </BrowserRouter>
-    </TotalActiveUsersContext.Provider>
   )
 }
 
