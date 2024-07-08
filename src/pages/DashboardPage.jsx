@@ -1,5 +1,5 @@
 import React,{useState} from 'react'
-import { Box, Container,Typography } from '@mui/material'
+import { Box, Container,Typography,Grid,Paper } from '@mui/material'
 import DashboardCardBig from '../components/Dashboard/Cards/DashboardCardBig'
 import DashboardCardSmall from '../components/Dashboard/Cards/DashboardCardSmall'
 import TicketSellDonutChart from '../components/Dashboard/Cards/DashboardTicketSellDonutChart'
@@ -242,56 +242,39 @@ const TotalRevenueOptions = {
   },
 };
 
+  return(
 
-
-
-  return (
-   <Container disableGutters sx={{bgcolor:'#EBF4F6',paddingLeft: '230px',display:'flex',flexDirection:'column',gap:'80px'}}>
-
-    <Box sx={{display:'flex',flexDirection:'column',gap:'20px',paddingRight:'10px',paddingLeft:'10px'}}>
-
-    <Box sx={{display:'flex',justifyContent:'space-between',paddingRight:'10px',paddingTop:'20px',gap:'20px'}}> 
-
-
-      <DashboardCardBig image='/images/TotalUsers.svg' title='Total Users' data = {TotalUserData} options = {TotalUserOptions}/>
-
-      <DashboardCardBig image='/images/TotalRevenue.svg' title='Total Revenue' value='86,000' data = {TotalRevenueData} options = {TotalRevenueOptions}/>
-
-    </Box>
-
-    <Box sx={{display:'flex',justifyContent:'space-between',paddingRight:'10px',paddingTop:'15px',gap:'20px'}}>
-
-      <DashboardCardSmall image='/images/EventsOrganized.svg' title={<p style={{margin:'0',lineHeight:'1'}}>Events<br/>Organized</p>} value='116' />
-      <DashboardCardSmall image='/images/TotalEventOrganizers.svg' title={<p style={{margin:'0',lineHeight:'1'}}>Total Events<br/>Organizers</p>} value='26' />
-      <DashboardCardSmall image='/images/TotalTicketsSold.svg' title={<p style={{margin:'0',lineHeight:'1'}}>Total Tickets<br/>Sold</p>} value='42,000' />
-
-    </Box>
-
-
-    </Box>
-
-
-    <Box>
-    <Typography variant='p' sx={{paddingBottom:'5px',paddingLeft:'20px',fontFamily:'Roboto',color:'#071952',fontSize:'1.8rem'}}>Tickets Sold By Month</Typography>
-    <Box sx={{display:'flex',gap:'20px',justifyContent:'space-between',paddingRight:'20px',paddingLeft:'10px'}}>
-
-      <TicketSellGraph data = {LineData} options = {LineOptions}/>
-
-      <TicketSellDonutChart data = {DoughnutData} options ={DoughnutOptions}/>
-
-    </Box>
-    </Box>
-
-    <Box sx={{paddingRight:'20px',paddingLeft:'10px'}}>
-      <UpcomingEvents />
-    </Box>
-
-    
-    
-      
-   </Container>
+<Container disableGutters sx={{bgcolor:'#EBF4F6',paddingLeft: '235px',paddingRight:'15px',paddingY:'30px',position:'relative',zIndex:'0'}}>
+    <Grid container spacing={4}>
+      <Grid item xs={12} md={6}>
+        <DashboardCardBig image='/images/TotalUsers.svg' title='Total Users' data = {TotalUserData} options = {TotalUserOptions}/>
+      </Grid>
+      <Grid item xs={12} md={6}>
+        <DashboardCardBig image='/images/TotalRevenue.svg' title='Total Revenue' value='86,000' data = {TotalRevenueData} options = {TotalRevenueOptions}/>
+      </Grid>
+      <Grid item xs={12} md={4}>
+        <DashboardCardSmall image='/images/EventsOrganized.svg' title={<p style={{margin:'0',lineHeight:'1'}}>Events<br/>Organized</p>} value='116' />
+      </Grid>
+      <Grid item xs={12} md={4}>
+        <DashboardCardSmall image='/images/TotalEventOrganizers.svg' title={<p style={{margin:'0',lineHeight:'1'}}>Total Events<br/>Organizers</p>} value='26' />
+      </Grid>
+      <Grid item xs={12} md={4}>
+        <DashboardCardSmall image='/images/TotalTicketsSold.svg' title={<p style={{margin:'0',lineHeight:'1'}}>Total Tickets<br/>Sold</p>} value='42,000' />
+      </Grid>
+      <Grid item xs={12} md={8}>
+        <TicketSellGraph data = {LineData} options = {LineOptions}/>
+      </Grid>
+      <Grid item xs={12} md={4}>
+        <TicketSellDonutChart data = {DoughnutData} options ={DoughnutOptions}/>
+      </Grid>
+      <Grid item xs={12}>
+        <UpcomingEvents />
+      </Grid>
+    </Grid>
+  </Container>
 
   )
+
 }
 
 export default DashboardPage

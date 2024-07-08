@@ -5,7 +5,7 @@ import {
 } from 'material-react-table';
 import IconButton from '@mui/material/IconButton';
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
-import { Container } from '@mui/material';
+import { Container,Grid } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { selectUsers } from '../../app/slices/usersTableSlice';
 
@@ -66,8 +66,12 @@ const Example = (props) => {
   });
 
   return (
-  <Container disableGutters sx={{marginBottom:'16px'}}>
-    <MaterialReactTable table={table} />
+    <Container disableGutters sx={{ marginBottom: '16px' }}>
+    <Grid container spacing={2}>
+      <Grid item xs={12}>
+        <MaterialReactTable table={table} />
+      </Grid>
+    </Grid>
   </Container>
 
 )

@@ -1,4 +1,4 @@
-import {React,useContext} from 'react'
+import {React,useContext,useState,useEffect} from 'react'
 import {Container,Box,Typography,Select,MenuItem} from '@mui/material'
 import FilteredRowsContext from '../../context/FilteredRowsContext'
 
@@ -6,8 +6,74 @@ const OrganizersCard = (props) => {
 
     const { filteredRows } = useContext(FilteredRowsContext);
 
+    const [imageWidth, setImageWidth] = useState({ width: '248px' });
+    const [selectWidth, setSelectWidth] = useState('248px');
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 1016) { // Example breakpoint for 'md'
+        setImageWidth({ width: '248px' });
+      }
+      else if (window.innerWidth >= 900) { // Example breakpoint for 'sm'
+        setImageWidth({ width: '180px' });
+      }
+      else if (window.innerWidth >= 675 && window.innerWidth <900 ) { // Example breakpoint for 'xs'
+        setImageWidth({ width: '230px' });
+      }
+      else if (window.innerWidth >= 575 && window.innerWidth <675 ) { // Example breakpoint for 'xs'
+        setImageWidth({ width: '200px' });
+      }
+      
+      else {
+        setImageWidth({ width: '120px' });
+      }
+    };
+
+    // Set the initial style based on the current window size
+    handleResize();
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+  
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 1130) { // Example breakpoint for 'md'
+        setSelectWidth('248px');
+      }
+      else if (window.innerWidth >= 1035 && window.innerWidth < 1130) { // Example breakpoint for 'sm'
+        setSelectWidth('200px');
+      }
+
+      else if (window.innerWidth >= 995 && window.innerWidth < 1030) { // Example breakpoint for 'sm'
+        setSelectWidth('180px');
+      }
+
+      else if (window.innerWidth >= 900 && window.innerWidth < 995) { // Example breakpoint for 'sm'
+        setSelectWidth('132px');
+      }
+
+      else if (window.innerWidth >= 675 && window.innerWidth <900 ) { // Example breakpoint for 'xs'
+        setSelectWidth('230px');
+      }
+      else if (window.innerWidth >= 575 && window.innerWidth <675 ) { // Example breakpoint for 'xs'
+        setSelectWidth('200px');
+      }
+      
+      else {
+        setSelectWidth('120px');
+      }
+    };
+
+    // Set the initial style based on the current window size
+    handleResize();
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
-    <Container disableGutters sx={{display:'flex',borderRadius:'20px', width:'50%',height:'270px',bgcolor:'white',justifyContent:'space-between',paddingX:'15px'}}>
+    <Container disableGutters sx={{display:'flex',borderRadius:'20px' ,height:{md:'270px', sm:'auto'},bgcolor:'white',justifyContent:'space-between',paddingX:'15px'}}>
 
         <Box sx={{display:'flex',flexDirection:'column',justifyContent:'space-between',gap:'10px',paddingY:'15px'}}>
 
@@ -22,16 +88,17 @@ const OrganizersCard = (props) => {
 
             {props.image ? (
                 <Box sx={{display:'flex',alignItems:'center',justifyContent:'center'}}>
-                <img src={props.image} alt="CardImage" height={210} width={248} />
+                <img src={props.image} alt="CardImage" height={210} style={imageWidth} />
                 </Box>
             ) : (
                 <Box sx={{paddingTop:'12px'}}>
-                <Select value={props.state} onChange={props.function} displayEmpty sx={{width:'248px', boxShadow:'1px 4px 8px #9fa5a7',border:'none',outline:'none',borderRadius:'10px'}} 
+                <Select value={props.state} onChange={props.function} displayEmpty sx={{width:selectWidth, boxShadow:'1px 4px 8px #9fa5a7',border:'none',outline:'none',borderRadius:'10px'}} 
                 MenuProps={{
                     PaperProps: {
                         style: {
                         maxHeight: 189,
-                        borderRadius:'5px'
+                        borderRadius:'5px',
+                        backgroundColor: 'rgba(255, 255, 255, 0.9)',
                         },
                     },
                 }}>

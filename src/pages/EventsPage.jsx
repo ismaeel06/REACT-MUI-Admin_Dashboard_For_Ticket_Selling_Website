@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Container,Typography } from '@mui/material'
+import { Box, Container,Typography,Grid } from '@mui/material'
 import EventsCardBig from '../components/EventPage/Cards/EventsCardBig'
 import EventsListedGraph from '../components/EventPage/Cards/EventsListedGraph'
 import RevenuePie from '../components/EventPage/Cards/RevenuePie'
@@ -126,33 +126,32 @@ const EventsPage = () => {
 
 
   return (
-    <Container  disableGutters sx={{bgcolor:'#EBF4F6',paddingLeft: '230px',display:'flex',flexDirection:'column',gap:'50px'}}>
-     <Box sx={{display:'flex',justifyContent:'space-between',paddingRight:'20px',paddingTop:'20px',gap:'20px',paddingLeft:'10px'}}> 
+    <Container disableGutters sx={{bgcolor:'#EBF4F6',paddingLeft: '235px',paddingRight:'15px',paddingTop:'15px',position:'relative',zIndex:'0'}}>
+      <Grid container spacing={4} >
+        
+        <Grid item xs={12} md={6}>
+          <EventsCardBig icon='/images/EventsApprovedIcon.svg' title='Events Approved' value='15' image='/images/EventsApproved.svg' />
+        </Grid>
 
-      <EventsCardBig icon='/images/EventsApprovedIcon.svg' title='Events Approved' value='15' image='/images/EventsApproved.svg'/>
+        <Grid item xs={12} md={6}>
+          <EventsCardBig icon='/images/EventsPendingIcon.svg' title='Events Pending' value='12' image='/images/EventsPending.svg' />
+        </Grid>
 
-      <EventsCardBig icon='/images/EventsPendingIcon.svg' title='Events Pending' value='12' image='/images/EventsPending.svg' />
+          <Grid item xs={12} md={8}>
+            <Typography variant='h6' sx={{ paddingBottom: '5px', fontFamily: 'Roboto', color: '#071952', fontSize: '1.8rem' }}>Events Listed By Month</Typography>
+            <EventsListedGraph data={LineData} options={LineOptions} />
+          </Grid>
 
-     </Box>
+          <Grid item xs={12} md={4} sx={{marginTop:'51px'}}>
+            <RevenuePie data={PieData} options={PieOptions} />
+          </Grid>
 
-     <Box>
-        <Typography variant='p' sx={{paddingBottom:'5px',paddingLeft:'20px',fontFamily:'Roboto',color:'#071952',fontSize:'1.8rem'}}>Events Listed By Month</Typography>
-        <Box sx={{display:'flex',gap:'20px',justifyContent:'space-between',paddingRight:'20px',paddingLeft:'10px'}}>
-
-        <EventsListedGraph data = {LineData} options = {LineOptions}/>
-
-        <RevenuePie data = {PieData} options ={PieOptions}/>
-
-        </Box>
-      </Box>
-
-      <Box sx={{paddingRight:'20px',paddingLeft:'10px'}}>
-      <EventRequests />
-      </Box>
-
-     
+          <Grid item xs={12}>
+            <EventRequests />
+          </Grid>
+      </Grid>
     </Container>
-  )
-}
+  );
+};
 
 export default EventsPage

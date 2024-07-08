@@ -3,7 +3,7 @@ import {Container,Box,Typography} from '@mui/material'
 
 const DashboardCardSmall = (props) => {
   return (
-    <Container disableGutters sx={{display:'flex',borderRadius:'20px', width:'33.33%',height:'198px',bgcolor:'white'}}>
+    <Container disableGutters sx={{display:'flex',borderRadius:'20px',height:'198px',bgcolor:'white'}}>
 
         <Box sx={{display:'flex',flexDirection:'column',justifyContent:'space-between',gap:'12px',paddingY:'12px',paddingLeft:'10px'}}>
 

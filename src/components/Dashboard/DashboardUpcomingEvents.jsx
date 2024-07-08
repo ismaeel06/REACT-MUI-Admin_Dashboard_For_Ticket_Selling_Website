@@ -8,7 +8,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import { Container, Typography } from '@mui/material';
+import { Container, Typography,Grid,useTheme,useMediaQuery } from '@mui/material';
 
 const columns = [
   { id: 'name', label: 'EventName', minWidth: 120 },
@@ -88,57 +88,66 @@ export default function StickyHeadTable() {
     setPage(0);
   };
 
+  const theme = useTheme();
+  const isXsScreen = useMediaQuery(theme.breakpoints.down('xs'));
+
   return (
     <Container disableGutters>
-      <Typography variant='p' sx={{paddingBottom:'5px',paddingLeft:'10px',fontFamily:'Roboto',color:'#071952',fontSize:'1.8rem'}}>Upcoming Events</Typography>
-    <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-      <TableContainer sx={{ maxHeight: 440 }}>
-        <Table stickyHeader aria-label="sticky table">
-          <TableHead>
-            <TableRow>
-              {columns.map((column) => (
-                <TableCell sx={{bgcolor:'rgba(55, 183, 195, 0.97)'}}
-                  key={column.id}
-                  align={column.align}
-                  style={{ minWidth: column.minWidth }}
-                >
-                  {column.label}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {rows
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => {
-                return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                    {columns.map((column) => {
-                      const value = row[column.id];
+      <Grid container spacing={2}>
+        <Grid item xs={12}>
+          <Typography variant='h6' sx={{ paddingBottom: '5px', paddingLeft: '10px', fontFamily: 'Roboto', color: '#071952', fontSize: isXsScreen ? '1.2rem' : '1.8rem' }}>Upcoming Events</Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+            <TableContainer sx={{ maxHeight: 440 }}>
+              <Table stickyHeader aria-label="sticky table">
+                <TableHead>
+                  <TableRow>
+                    {columns.map((column) => (
+                      <TableCell sx={{ bgcolor: 'rgba(55, 183, 195, 0.97)' }}
+                        key={column.id}
+                        align={column.align}
+                        style={{ minWidth: column.minWidth }}
+                      >
+                        {column.label}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {rows
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((row) => {
                       return (
-                        <TableCell key={column.id} align={column.align}>
-                          {column.format && typeof value === 'number'
-                            ? column.format(value)
-                            : value}
-                        </TableCell>
+                        <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                          {columns.map((column) => {
+                            const value = row[column.id];
+                            return (
+                              <TableCell key={column.id} align={column.align}>
+                                {column.format && typeof value === 'number'
+                                  ? column.format(value)
+                                  : value}
+                              </TableCell>
+                            );
+                          })}
+                        </TableRow>
                       );
                     })}
-                  </TableRow>
-                );
-              })}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
-        component="div"
-        count={rows.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
-    </Paper>
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <TablePagination
+              rowsPerPageOptions={[10, 25, 100]}
+              component="div"
+              count={rows.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+          </Paper>
+        </Grid>
+      </Grid>
     </Container>
   );
-}
+};

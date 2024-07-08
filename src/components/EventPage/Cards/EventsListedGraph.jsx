@@ -14,7 +14,7 @@ ChartJS.register(LineElement,CategoryScale,LinearScale,PointElement,Tooltip,Titl
 
 const EventsListedGraph = (props) => {
     return (
-        <Container disableGutters sx={{display:'flex',borderRadius:'20px', width:'65%',height:'260px',bgcolor:'white',alignItems:'center',justifyContent:'center'}}>
+        <Container disableGutters sx={{display:'flex',borderRadius:'20px',height:'260px',bgcolor:'white',alignItems:'center',justifyContent:'center'}}>
     
           <Line data = {props.data} options = {props.options} />
     

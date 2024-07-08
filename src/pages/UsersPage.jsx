@@ -1,5 +1,5 @@
 import React,{useState} from 'react'
-import { Container, Box, Typography,Tabs,Tab } from '@mui/material'
+import { Container, Box, Typography,Tabs,Tab,Grid } from '@mui/material'
 import TotalActiveUsers from '../components/UsersPage/TotalActiveUsers'
 import GenderRatioDoughnut from '../components/UsersPage/GenderRatioDoughnut'
 import ManageUsers from '../components/UsersPage/ManageUsers'
@@ -65,41 +65,38 @@ const UsersPage = () => {
 
 
   return (
-    <Container disableGutters sx={{bgcolor:'#EBF4F6',paddingLeft: '230px',display:'flex',flexDirection:'column',gap:'50px'}}>
-        <Box sx={{display:'flex',gap:'20px',justifyContent:'space-between',paddingRight:'20px',paddingLeft:'10px',paddingTop:'20px'}}>
-          <TotalActiveUsers icon='/images/activeUsers.png' title='Total Active Users' image='/images/activeUsersImage.svg'/>
-          <GenderRatioDoughnut data = {DoughnutData} options ={DoughnutOptions}/>
-        </Box>
-
-
-        <Box sx={{display:'flex',flexDirection:'column',gap:'30px'}}>
-
-          <Tabs value={active} onChange={handleTabChange} aria-label="organizer tabs" TabIndicatorProps={{style:{backgroundColor:'#088395'}}}>
-            <Tab label="Manage Users" sx={{'&.Mui-selected': { color: '#071952' }}}/>
-            <Tab label="Add User" sx={{'&.Mui-selected': { color: '#071952' }}}/>
-          </Tabs>
-
-          {active === 0 && (
-
-            <Box sx={{ paddingRight: '20px', paddingLeft: '10px' }}>
-            <ManageUsers />
-            </Box>
-
-          )}
-          
-          {active === 1 && (
-        
-            <Box sx={{ paddingRight: '20px', paddingLeft: '10px' }}>
-            <AddUsers />
-            </Box>
-        
-          )}
-        
-      </Box>
-
-
-    </Container>
-  )
-}
+    <Container disableGutters sx={{bgcolor:'#EBF4F6',paddingLeft: '235px',paddingRight:'15px',paddingTop:'15px',position:'relative',zIndex:'0',display:'flex',flexDirection:'column',gap:'48px'}}>
+          <Grid container spacing={3} sx={{ justifyContent: 'space-between', paddingRight: '20px', paddingLeft: '10px', paddingTop: '20px' }}>
+            <Grid item xs={12} sm={12} md={7}>
+              <TotalActiveUsers icon='/images/activeUsers.png' title='Total Active Users' image='/images/activeUsersImage.svg' />
+            </Grid>
+            <Grid item xs={12} sm={12} md={5}>
+              <GenderRatioDoughnut data={DoughnutData} options={DoughnutOptions} />
+            </Grid>
+          </Grid>
+    
+          <Grid container direction="column" gap={3}>
+            <Grid item>
+              <Tabs value={active} onChange={handleTabChange} aria-label="organizer tabs" TabIndicatorProps={{ style: { backgroundColor: '#088395' } }}>
+                <Tab label="Manage Users" sx={{ '&.Mui-selected': { color: '#071952' } }} />
+                <Tab label="Add User" sx={{ '&.Mui-selected': { color: '#071952' } }} />
+              </Tabs>
+            </Grid>
+    
+            {active === 0 && (
+              <Grid item sx={{ paddingRight: '20px', paddingLeft: '10px' }}>
+                <ManageUsers />
+              </Grid>
+            )}
+    
+            {active === 1 && (
+              <Grid item sx={{ paddingRight: '20px', paddingLeft: '10px' }}>
+                <AddUsers />
+              </Grid>
+            )}
+          </Grid>
+        </Container>
+      );
+    };
 
 export default UsersPage
