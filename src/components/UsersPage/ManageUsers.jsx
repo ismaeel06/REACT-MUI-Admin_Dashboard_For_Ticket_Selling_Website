@@ -1,4 +1,4 @@
-import {useMemo } from 'react';
+import {useMemo,useEffect } from 'react';
 import {
   MaterialReactTable,
   useMaterialReactTable,
@@ -6,12 +6,40 @@ import {
 import IconButton from '@mui/material/IconButton';
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 import { Container,Grid } from '@mui/material';
-import { useSelector } from 'react-redux';
-import { selectUsers } from '../../app/slices/usersTableSlice';
+import { useSelector,useDispatch } from 'react-redux';
+import { selectUsers,fetchUsers } from '../../app/slices/usersTableSlice';
+
 
 
 const Example = (props) => {
   const  users  = useSelector(selectUsers);
+  const status = useSelector((state) => state.usersTable.status);
+  const error = useSelector((state) => state.usersTable.error);
+  // console.log(users);
+
+  
+
+  const userArray = useMemo(() => Object.values(users), [users]);
+
+  const data = useMemo(() => {
+    if (userArray.length > 0 && userArray[0]) {
+      console.log(userArray[0]);
+      return userArray[0].map((user) => {
+        return {
+          firstName: user.firstName,
+          lastName: user.lastName,
+          address: user.address,
+          city: user.city,
+          state: user.state,
+          email: user.email,
+        };
+      });
+    }
+    return [];
+  }, [userArray]);
+
+
+
 
   //should be memoized or stable
   const columns = useMemo(
@@ -62,14 +90,16 @@ const Example = (props) => {
 
   const table = useMaterialReactTable({
     columns,
-    data: users, //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
+    data: data, //data must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
   });
 
   return (
     <Container disableGutters sx={{ marginBottom: '16px' }}>
     <Grid container spacing={2}>
       <Grid item xs={12}>
-        <MaterialReactTable table={table} />
+          {status === 'loading' && <p>Loading...</p>}
+          {status === 'failed' && <p>Error: {error}</p>}
+          {status === 'succeeded' && <MaterialReactTable table={table} />}
       </Grid>
     </Grid>
   </Container>

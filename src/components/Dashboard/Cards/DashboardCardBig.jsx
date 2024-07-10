@@ -26,7 +26,7 @@ const DashboardCardBig = (props) => {
       <Grid item xs={12} sm={4} display="flex" flexDirection="column" justifyContent="space-between" gap={2}>
         <img src={props.image} alt="Icon" width={55} height={55} />
         <Typography variant='body1' sx={{ fontFamily: 'Roboto', color: '#071952', fontWeight: '400', fontSize: '1.5rem', ":hover": { cursor: 'default' } }}>
-          {props.value ? props.value : props.numUsers}
+          {props.value ? props.value : numUsers}
         </Typography>
         <Typography variant='body1' sx={{ fontFamily: 'Roboto', color: '#071952', fontWeight: '300', fontSize: '1.5rem', ":hover": { cursor: 'default' } }}>
           {props.title}

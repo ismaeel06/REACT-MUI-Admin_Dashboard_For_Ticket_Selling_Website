@@ -13,6 +13,7 @@ const getUsersData = asyncHandler(async (req, res) => {
 const createUser = asyncHandler(async (req, res) => {
     const { firstName, lastName, address, city, state, email, password, isAdmin, isOrganizer, created } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10); // Hash the password
+    console.log(req.body)
 
     const userExists = await User.findOne({ email: req.body.email });
     if (userExists) {
@@ -34,6 +35,7 @@ const createUser = asyncHandler(async (req, res) => {
     const newUser = await user.save();
     if (newUser){
         res.status(200).json({
+            message: 'User created',
             _id: newUser._id,
             firstName: newUser.firstName,
             lastName: newUser.lastName,
@@ -43,7 +45,7 @@ const createUser = asyncHandler(async (req, res) => {
             email: newUser.email,
             isAdmin: newUser.isAdmin,
             isOrganizer: newUser.isOrganizer,
-            token: generateToken(newUser._id),
+            
         });
     }
     else {
@@ -97,7 +99,23 @@ const loginUser = asyncHandler(async (req, res) => {
     const {email, password} = req.body
     const user = await User.findOne({email: email})
     if(user && (await user.matchPassword(password))){
-        res.status(200).json({message: 'User logged in successfully'})
+        const token = generateToken(user._id)
+        res.status(200).json({
+            message: 'User logged in successfully',
+            token: token,
+            user: {
+                _id: user._id,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                address: user.address,
+                city: user.city,
+                state: user.state,
+                email: user.email,
+                isAdmin: user.isAdmin,
+                isOrganizer: user.isOrganizer,
+            }
+
+        })
     }
     else{
         res.status(401)
@@ -108,7 +126,7 @@ const loginUser = asyncHandler(async (req, res) => {
 //Generate token
 const generateToken = (id) => {
     return jwt.sign({id}, process.env.JWT_SECRET, {
-        expiresIn: '30d'
+        expiresIn: '5h'
     })
 }
 

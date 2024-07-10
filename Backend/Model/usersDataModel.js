@@ -30,7 +30,9 @@ const userSchema = mongoose.Schema({
     password: {
         type: String,
         required: true,
+        default: "12345678",
     },
+    
     isAdmin: {
         type: Boolean,
         required: true,
@@ -44,7 +46,7 @@ const userSchema = mongoose.Schema({
     created: {
         type: Date,
         default: Date.now,
-    }, 
+    },
 }
     
 );

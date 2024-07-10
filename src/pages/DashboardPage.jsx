@@ -262,9 +262,10 @@ const TotalRevenueOptions = {
         <DashboardCardSmall image='/images/TotalTicketsSold.svg' title={<p style={{margin:'0',lineHeight:'1'}}>Total Tickets<br/>Sold</p>} value='42,000' />
       </Grid>
       <Grid item xs={12} md={8}>
+      <Typography variant='h6' sx={{ paddingBottom: '5px', fontFamily: 'Roboto', color: '#071952', fontSize: '1.8rem' }}>Tickets Sold By Month</Typography>
         <TicketSellGraph data = {LineData} options = {LineOptions}/>
       </Grid>
-      <Grid item xs={12} md={4}>
+      <Grid item xs={12} md={4} sx={{marginTop:'51px'}}>
         <TicketSellDonutChart data = {DoughnutData} options ={DoughnutOptions}/>
       </Grid>
       <Grid item xs={12}>

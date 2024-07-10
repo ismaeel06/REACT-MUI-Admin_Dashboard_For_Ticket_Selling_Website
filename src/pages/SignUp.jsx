@@ -1,10 +1,9 @@
 import * as React from 'react';
+import { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -12,13 +11,14 @@ import LockOpenIcon from '@mui/icons-material/LockOpen';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import axios from 'axios';
 
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
+      <Link color="inherit" href="https://www.njadwil.com/">
+        Ticket Management System
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -34,10 +34,41 @@ export default function SignUp() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
+    const userData = {
+      firstName: data.get('firstName'),
+      lastName: data.get('lastName'),
+      address: data.get('address'),
+      city: data.get('city'),
+      state: data.get('state'),
       email: data.get('email'),
       password: data.get('password'),
-    });
+      confirmPassword: data.get('confirmPassword')
+    };
+
+    for (const key in userData) {
+      if (!userData[key]) {
+        window.alert('All fields must be filled');
+        return;
+      }
+    }
+
+    if (userData.password !== userData.confirmPassword) {
+      window.alert('Passwords do not match');
+      return;
+    }
+
+
+
+    try {
+      axios.post('http://localhost:5000/api/users/register', userData)
+        .then((response) => {
+          window.alert('User Registered Succesfully');
+          window.location.href = '/signin';
+        });
+    } catch (error) {
+      window.alert(`Error Registering User:',${error.response.data.message || error.message}`);
+    }
+
   };
 
   return (
@@ -52,7 +83,7 @@ export default function SignUp() {
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: '#071952' }}>
+          <Avatar sx={{ m: 1, bgcolor: '#088395' }}>
             <LockOpenIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
@@ -91,7 +122,7 @@ export default function SignUp() {
                   autoComplete="email"
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={12} md={6}>
                 <TextField
                   required
                   fullWidth
@@ -102,12 +133,53 @@ export default function SignUp() {
                   autoComplete="new-password"
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={12} md={6}>
+                <TextField
+                  required
+                  fullWidth
+                  name="confirmPassword"
+                  label="Confirm Password"
+                  type="password"
+                  id="confirmPassword"
+                  autoComplete="new-password"
+                />
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <TextField
+                  required
+                  fullWidth
+                  name="city"
+                  label="City"
+                  id="city"
+                  autoComplete="address-level2"
+                />
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <TextField
+                  required
+                  fullWidth
+                  name="state"
+                  label="State/Province/Region"
+                  id="state"
+                  autoComplete="address-level1"
+                />
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <TextField
+                  required
+                  fullWidth
+                  name="address"
+                  label="Address"
+                  id="address"
+                  autoComplete="street-address"
+                />
+              </Grid>
+              {/* <Grid item xs={12}>
                 <FormControlLabel
                   control={<Checkbox value="allowExtraEmails" color="primary" />}
                   label="I want to receive inspiration, marketing promotions and updates via email."
                 />
-              </Grid>
+              </Grid> */}
             </Grid>
             <Button
               type="submit"
@@ -119,7 +191,7 @@ export default function SignUp() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="/signin" variant="body2">
                   Already have an account? Sign in
                 </Link>
               </Grid>

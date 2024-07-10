@@ -1,7 +1,7 @@
 
 import './App.css'
 import React from 'react'
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import DashboardPage from './pages/DashboardPage'
 import EventsPage from './pages/EventsPage'
 import OrganizersPage from './pages/OrganizersPage'
@@ -12,20 +12,35 @@ import SettingsPage from './pages/SettingsPage';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import { useSelector,useDispatch } from 'react-redux';
-import { selectUsers } from './app/slices/usersTableSlice';
+import { selectUsers,fetchUsers } from './app/slices/usersTableSlice';
 import { setActiveUsersCount } from './app/slices/activeUsersSlice';
-import { useEffect } from 'react';
+import { useEffect,useMemo } from 'react';
 
 function App() {
-
-  const  users  = useSelector(selectUsers);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const activeUsers = users.length;
-    dispatch(setActiveUsersCount(activeUsers));
-  }, [users.length]);
+    dispatch(fetchUsers());
+  }, [dispatch]);
+
+  const  users  = useSelector(selectUsers);
+  const usersArray = useMemo(() => Object.values(users), [users]);
+
+  const numUsers = useMemo(() => {
+    if (usersArray.length > 0 && usersArray[0]) {
+      return usersArray[0].length
+    }
+    return [];
+  }, [usersArray]);
+
+
+
+
+
+  useEffect(() => {
+    dispatch(setActiveUsersCount(numUsers));
+  }, [numUsers]);
 
   return (
     <BrowserRouter>

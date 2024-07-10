@@ -12,13 +12,14 @@ import LockPersonIcon from '@mui/icons-material/LockPerson';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import axios from 'axios';
 
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
+      <Link color="inherit" href="https://www.njadwil.com/">
+        Ticket Selling Website
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}
@@ -31,13 +32,34 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function SignIn() {
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
+    const token = localStorage.getItem('token')
+    const userData={
       email: data.get('email'),
       password: data.get('password'),
-    });
+    };
+
+    for (const key in userData) {
+      if (!userData[key]) {
+        window.alert('All fields must be filled');
+        return;
+      }
+    }
+
+    try {
+      const response = await axios.post('http://localhost:5000/api/users/login', userData);
+      const { token } = response.data;
+
+      if (token) {
+        localStorage.setItem('token', token);
+        window.alert('Login successful');
+        window.location.href = '/';
+      }
+    } catch (error) {
+      window.alert('Login failed: ' + error.response.data.message);
+    }
   };
 
   return (
@@ -52,7 +74,7 @@ export default function SignIn() {
             alignItems: 'center',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: '#071952' }}>
+          <Avatar sx={{ m: 1, bgcolor: '#088395' }}>
             <LockPersonIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
@@ -98,7 +120,7 @@ export default function SignIn() {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="/signup" variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>

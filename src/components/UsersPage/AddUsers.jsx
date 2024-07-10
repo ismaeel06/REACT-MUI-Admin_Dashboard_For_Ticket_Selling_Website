@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import { Container, Box, Button, TextField, Alert } from '@mui/material';
+import { Container, Box, Button, TextField, Alert, InputAdornment,IconButton } from '@mui/material';
+import {Visibility,VisibilityOff} from '@mui/icons-material'
 import { useDispatch } from 'react-redux';
 import { addUser } from '../../app/slices/usersTableSlice';
+import axios from 'axios';
 
 const AddUsers = () => {
   const dispatch = useDispatch();
@@ -11,11 +13,13 @@ const AddUsers = () => {
     address: '',
     city: '',
     state: '',
-    email: ''
+    email: '',
+    password: '12345678'
   });
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
   const [alertSeverity, setAlertSeverity] = useState('info');
+  const [showPassword, setShowPassword] = useState(true);
 
   // Handle input change
   const handleChange = (e) => {
@@ -37,21 +41,37 @@ const AddUsers = () => {
       return;
     }
     else {
-    dispatch(addUser(formData));
-    // Reset form if necessary
+    try {
+      axios.post('http://localhost:5000/api/users/register', formData)
+        .then(res => {
+          dispatch(addUser(res.data));
+        });
+    } catch (error) {
+      console.error(error);
+      setShowAlert(true);
+      setAlertMessage('User Not Added');
+      setAlertSeverity('error');
+    }
+    // Clear form data
     setFormData({
       firstName: '',
       lastName: '',
       address: '',
       city: '',
       state: '',
-      email: ''
+      email: '',
+      password: '12345678'
     });
+    window.location.reload();
   }
     // Show success message
     setShowAlert(true);
     setAlertMessage('User Added Successfully');
     setAlertSeverity('success');
+  };
+
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
   };
 
   return (
@@ -124,6 +144,31 @@ const AddUsers = () => {
           autoComplete="email"
           value={formData.email}
           onChange={handleChange}
+        />
+          <TextField
+          margin="normal"
+          required
+          fullWidth
+          id="password"
+          label="Password"
+          name="password"
+          type={showPassword ? 'text' : 'password'}
+          value={formData.password}
+          defaultValue='12345678'
+          onChange={handleChange}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  edge="end"
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
         />
         <Button
           type="submit"

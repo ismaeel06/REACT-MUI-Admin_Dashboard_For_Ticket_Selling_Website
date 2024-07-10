@@ -1,17 +1,20 @@
 import express from 'express'
 import {getUsersData, createUser, deleteUser, updateUser, loginUser} from '../Controllers/usersDataController.js'
+import {protect} from '../Middleware/authmiddleware.js'
 
 const router = express.Router()
 
-router.get('/', getUsersData)
-
 router.post('/register', createUser)
 
-router.put('/:id', updateUser)
-
-router.delete('/:id', deleteUser)
-
 router.post('/login', loginUser)
+
+router.get('/', protect, getUsersData)
+
+router.put('/:id',protect, updateUser)
+
+router.delete('/:id',protect, deleteUser)
+
+
 
 
 export default router

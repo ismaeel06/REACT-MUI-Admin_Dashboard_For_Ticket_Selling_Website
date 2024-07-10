@@ -1,63 +1,42 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice,createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
 
-const Data = [
-    {
-    
-      firstName: 'John',
-      lastName: 'Doe',
-      address: '261 Erdman Ford',
-      city: 'East Daphne',
-      state: 'Kentucky',
-      email:'abc@xyz.com',
-      
-      
+export const fetchUsers = createAsyncThunk('usersTable/fetchUsers', async () => {
+  const response = await axios.get('http://localhost:5000/api/users/', {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
     },
-    {
-      
-      firstName: 'Jane',
-      lastName: 'Doe',
-      address: '769 Dominic Grove',
-      city: 'Columbus',
-      state: 'Ohio',
-      email:'abc@xyz.com'
-    },
-    {
-      firstName: 'Joe',
-      lastName: 'Doe',
-      address: '566 Brakus Inlet',
-      city: 'South Linda',
-      state: 'West Virginia',
-      email:'abc@xyz.com'
-    },
-    {
-      
-      firstName: 'Kevin',
-      lastName: 'Vandy',
-      address: '722 Emie Stream',
-      city: 'Lincoln',
-      state: 'Nebraska',
-      email:'abc@xyz.com'
-    },
-    {
-      
-      firstName: 'Joshua',
-      lastName: 'Rolluffs',
-      address: '32188 Larkin Turnpike',
-      city: 'Charleston',
-      state: 'South Carolina',
-      email:'abc@xyz.com'
-    },
-  ];
+  });
+
+  return response.data;
+});
 
 export const usersTableSlice = createSlice({
   name: 'usersTable',
   initialState: {
-    users: Data,
+    users: [],
+    status:'idle',
+    error: null,
   },
   reducers: {
     addUser: (state, action) => {
       state.users.push(action.payload);
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchUsers.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(fetchUsers.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.users = action.payload;
+      })
+      .addCase(fetchUsers.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      });
   },
 });
 
