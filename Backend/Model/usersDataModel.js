@@ -32,7 +32,7 @@ const userSchema = mongoose.Schema({
         required: true,
         default: "12345678",
     },
-    
+
     isAdmin: {
         type: Boolean,
         required: true,
@@ -44,8 +44,12 @@ const userSchema = mongoose.Schema({
         default: false,
     },
     created: {
-        type: Date,
-        default: Date.now,
+        type: String,
+        default: () => {
+        const now = new Date();
+        const options = { day: "numeric", month: "short", year: "numeric" };
+        return now.toLocaleDateString("en-GB", options);
+    },
     },
 }
     

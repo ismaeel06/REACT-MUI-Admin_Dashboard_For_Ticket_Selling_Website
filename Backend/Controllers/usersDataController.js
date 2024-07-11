@@ -13,11 +13,10 @@ const getUsersData = asyncHandler(async (req, res) => {
 const createUser = asyncHandler(async (req, res) => {
     const { firstName, lastName, address, city, state, email, password, isAdmin, isOrganizer, created } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10); // Hash the password
-    console.log(req.body)
 
     const userExists = await User.findOne({ email: req.body.email });
     if (userExists) {
-        res.status(400).json({message: 'User already exists'});
+        res.status(400).json('User already exists');
     }
         const user = await User.create({
             firstName,

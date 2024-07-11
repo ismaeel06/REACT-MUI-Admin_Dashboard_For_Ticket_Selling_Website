@@ -43,31 +43,37 @@ const AddUsers = () => {
     else {
     try {
       axios.post('http://localhost:5000/api/users/register', formData)
-        .then(res => {
-          dispatch(addUser(res.data));
-        });
+        .then((res) => {
+          setFormData({
+          firstName: '',
+          lastName: '',
+          address: '',
+          city: '',
+          state: '',
+          email: '',
+          password: '12345678'
+          });
+          // Show success message
+          window.alert("User Added Succesfully")
+          window.location.reload();
+
+        })
+        .catch((error) => {
+          setShowAlert(true);
+          setAlertMessage(error.response.data);
+          setAlertSeverity('error');
+
+        })
+        ;
     } catch (error) {
-      console.error(error);
-      setShowAlert(true);
-      setAlertMessage('User Not Added');
-      setAlertSeverity('error');
+      
+        setShowAlert(true);
+        setAlertMessage('Invalid User Data');
+        setAlertSeverity('error');
+
     }
-    // Clear form data
-    setFormData({
-      firstName: '',
-      lastName: '',
-      address: '',
-      city: '',
-      state: '',
-      email: '',
-      password: '12345678'
-    });
-    window.location.reload();
+    
   }
-    // Show success message
-    setShowAlert(true);
-    setAlertMessage('User Added Successfully');
-    setAlertSeverity('success');
   };
 
   const handleClickShowPassword = () => {
@@ -153,7 +159,6 @@ const AddUsers = () => {
           label="Password"
           name="password"
           type={showPassword ? 'text' : 'password'}
-          value={formData.password}
           defaultValue='12345678'
           onChange={handleChange}
           InputProps={{
