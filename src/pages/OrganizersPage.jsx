@@ -1,14 +1,36 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import { Box, Container,Typography,Tabs,Tab,Grid } from '@mui/material'
 import OrganizersCard from '../components/OrganizersPage/OrganizersCard'
 import OrganizersRequests from '../components/OrganizersPage/OrganizerRequests'
 import EventsOrganized from '../components/OrganizersPage/EventsOrganized'
 import FilteredRowsContext from '../context/FilteredRowsContext'
+import axios from 'axios'
+
 
 const OrganizersPage = () => {
 
+  const [organizersCount, setOrganizersCount] = useState()
+  const [organizers, setOrganizers] = useState([])
   const [selectedOrganizer, setSelectedOrganizer] = useState('')
   const [filteredRows, setFilteredRows] = useState([]);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try{
+      const { data } = await axios.get('http://localhost:5000/api/users',
+        {
+          headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}
+        }
+      )
+      const filteredData = data.users.filter(user => user.isOrganizer === true)
+      setOrganizersCount(filteredData.length)
+      setOrganizers(filteredData)
+    } catch (error) {
+      console.log(error)
+    }    
+    };
+    fetchUsers();
+  }, [])
 
     const handleChange = (event) => {
         setSelectedOrganizer(event.target.value);
@@ -26,11 +48,11 @@ const OrganizersPage = () => {
         <Grid container spacing={4}>
 
           <Grid item xs={12} sm={12} md={6}>
-            <OrganizersCard icon='/images/OrganizersOnboardIcon.svg' title='Organizers Onboard' value='16' image='/images/OrganizersOnboard.svg' />
+            <OrganizersCard icon='/images/OrganizersOnboardIcon.svg' title='Organizers Onboard' value={organizersCount} image='/images/OrganizersOnboard.svg' />
           </Grid>
 
           <Grid item xs={12} sm={12} md={6}>
-            <OrganizersCard icon='/images/EventsOrganizedByOrganizerIcon.svg' title='Events Organized By' state={selectedOrganizer} function={handleChange} />
+            <OrganizersCard icon='/images/EventsOrganizedByOrganizerIcon.svg' title='Events Organized By' state={selectedOrganizer} function={handleChange} data = {organizers} />
           </Grid>
 
         </Grid>

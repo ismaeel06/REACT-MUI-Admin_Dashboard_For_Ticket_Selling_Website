@@ -103,36 +103,13 @@ const OrganizersCard = (props) => {
                     },
                 }}>
                 <MenuItem value="" disabled>Select an option</MenuItem>
-                <MenuItem value="Malam Jabba Ski Resort">Malam Jabba Ski Resort</MenuItem>
-                <MenuItem value="Naltar Ski Resort">Naltar Ski Resort</MenuItem>
-                <MenuItem value="GB Ministry">GB Ministry</MenuItem>
-                <MenuItem value="Coca Cola">Coca Cola</MenuItem>
-                <MenuItem value="National Foods">National Foods</MenuItem>
-                <MenuItem value="Asim Azhar">Asim Azhar</MenuItem>
-                <MenuItem value="Organizer 7">Organizer 7</MenuItem>
-                <MenuItem value="Organizer 8">Organizer 8</MenuItem>
-                <MenuItem value="Organizer 9">Organizer 9</MenuItem>
-                <MenuItem value="Organizer 10">Organizer 10</MenuItem>
-                <MenuItem value="Organizer 11">Organizer 11</MenuItem>
-                <MenuItem value="Organizer 12">Organizer 12</MenuItem>
-                <MenuItem value="Organizer 13">Organizer 13</MenuItem>
-                <MenuItem value="Organizer 14">Organizer 14</MenuItem>
-                <MenuItem value="Organizer 15">Organizer 15</MenuItem>
-                <MenuItem value="Organizer 16">Organizer 16</MenuItem>
-                
+                {props.data.map((organizer) => (
+                    <MenuItem key={organizer._id} value={organizer.firstName + ' ' + organizer.lastName}>{organizer.firstName + ' ' + organizer.lastName}</MenuItem>
+                ))}
                 </Select>
                 </Box>
       )}
           
-
-
-
-       
-
-
-
-
-
     </Container>
   )
 }
