@@ -1,5 +1,5 @@
 import express from 'express'
-import {getUsersData, createUser, deleteUser, updateUser, loginUser} from '../Controllers/usersDataController.js'
+import {getUsersData, getUserByEmail, createUser, deleteUser, updateUser, loginUser} from '../Controllers/usersDataController.js'
 import {protect} from '../Middleware/authmiddleware.js'
 
 const router = express.Router()
@@ -9,6 +9,8 @@ router.post('/register', createUser)
 router.post('/login', loginUser)
 
 router.get('/', protect, getUsersData)
+
+router.get('/:email', protect, getUserByEmail)
 
 router.put('/:id',protect, updateUser)
 

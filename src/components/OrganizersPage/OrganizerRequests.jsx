@@ -11,12 +11,15 @@ import TableRow from '@mui/material/TableRow';
 import { Container, Typography, IconButton, Box } from '@mui/material';
 import DoneIcon from '@mui/icons-material/Done';
 import CloseIcon from '@mui/icons-material/Close';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+
 
 const columns = [
-  { id: 'id', label: 'ID', minWidth: 120 },
+  { id: 'sno', label: 'S.No.', minWidth: 10 },
   { id: 'organizerName', label: 'Organizer Name', minWidth: 70 },
   {
-    id: 'event',
+    id: 'flagshipEvent',
     label: 'Flagship Event',
     minWidth: 170,
     align: 'left',
@@ -30,12 +33,12 @@ const columns = [
   {
     id: 'phone',
     label: 'Phone No.',
-    minWidth: 60,
+    minWidth: 150,
     align: 'center',
   },
   {
-    id: 'budget',
-    label: 'Budget',
+    id: 'requestDate',
+    label: 'Request Date',
     minWidth: 120,
     align: 'center',
   },
@@ -49,31 +52,28 @@ const columns = [
   
 ];
 
-function createData(id,organizerName, event, email, phone, budget, request) {
-  return { id,organizerName,  event, email, phone, budget, request };
-}
-
-const rows = [
-  createData('124418', 'Malam Jabba Ski Resort', 'Int. Ski Competition','abc@xyz.com', '0234-9876543', 12000, ),
-  createData('122312', 'Naltar Ski Resort', 'Int. Ski Competition','abc@xyz.com', '0234-9876543', 9000, ),
-  createData('145321', 'GB Ministry', "Spring Blossom Festival", 'abc@xyz.com', '0234-9876543', 4500, ),
-  createData('178892', 'GB Ministry', "International Silk Route ", "abc@xyz.com", '0234-9876543', 5000, ),
-  createData('164231', 'Coca Cola', "Taste Fest", "abc@xyz.com", '0234-9876543', 15000, ),
-  createData('116743', 'National Foods', "Food Mela", "abc@xyz.com", '0234-9876543', 18000,),
-  createData('109675', 'Asim Azhar', "Concert","abc@xyz.com", '0234-9876543', 12000,),
-  createData('166543', 'Organizer', 'Venue', 'abc@xyz.com', '0234-9876543', 16000,),
-  createData('177432', 'Organizer', 'Venue', 'abc@xyz.com', '0234-9876543', 16000,),
-  createData('143323', 'Organizer', 'Venue', 'abc@xyz.com', '0234-9876543', 16000,),
-//   createData('Event Name', 'Organizer', 'Venue', 'Genre', '26/4/24', 16000,),
-//   createData('Event Name', 'Organizer', 'Venue', 'Genre', '26/4/24', 16000,),
-//   createData('Event Name', 'Organizer', 'Venue', 'Genre', '26/4/24', 16000,),
-//   createData('Event Name', 'Organizer', 'Venue', 'Genre', '26/4/24', 16000,),
-//   createData('Event Name', 'Organizer', 'Venue', 'Genre', '26/4/24', 6000,),
-];
-
 export default function StickyHeadTable() {
+  const [rows,setRows] = useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try{
+        const {data} = await axios.get('http://localhost:5000/api/organizerRequests',
+        {headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}}
+        );
+        const dataWithSerial = data.organizerRequests.map((item, index) => ({
+          ...item,
+          sno: index + 1,
+        }));
+        setRows(dataWithSerial);
+      } catch(error){
+        console.log(error);
+      }
+    }
+    fetchData();
+  },[]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -83,6 +83,51 @@ export default function StickyHeadTable() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+
+  const handleAccept = async (email) => {
+    if(window.confirm('Are you sure you want to accept this organizer?')){
+      console.log(email);
+    try{
+      const user = await axios.get(`http://localhost:5000/api/users/${email}`,
+      {headers : {Authorization: `Bearer ${localStorage.getItem('token')}`}}
+      );
+      console.log(user.data.user._id);
+      if(user){
+      await axios.put(`http://localhost:5000/api/users/${user.data.user._id}`,
+        {
+          isOrganizer: true,
+        },
+        {headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}});
+      window.alert('Organizer Added');
+      await axios.delete(`http://localhost:5000/api/organizerRequests?email=${email}`,
+        {headers : {Authorization: `Bearer ${localStorage.getItem('token')}`}
+        });
+      window.location.reload();
+    }
+    } catch(error){
+      console.log('Failed to add organizer',error);
+    }
+  }
+};
+
+const handleDecline = async (email) => {
+  if(window.confirm('Are you sure you want to decline this organizer?')){
+    console.log(email);
+  try{
+    if(email){
+    await axios.delete(`http://localhost:5000/api/organizerRequests?email=${email}`,
+    {headers : {Authorization: `Bearer ${localStorage.getItem('token')}`}
+    });
+    window.alert('Organizer Request Declined');
+    window.location.reload();
+  }
+  }
+  catch(error){
+    console.log('Failed to decline organizer',error);
+  }
+}
+};
+
 
   return (
     <Container disableGutters>
@@ -117,8 +162,8 @@ export default function StickyHeadTable() {
                           <TableCell key={column.id} align={column.align}>
                             <Box sx={{display:'flex',justifyContent:'space-between',gap:'25px'}}>
 
-                                <IconButton sx={{color:'#37B7C3'}}> <DoneIcon /> </IconButton>
-                                <IconButton sx={{color:'#EC6258'}}> <CloseIcon /> </IconButton>
+                                <IconButton sx={{color:'#37B7C3'}} onClick={() => handleAccept(row.email)}> <DoneIcon /> </IconButton>
+                                <IconButton sx={{color:'#EC6258'}} onClick={() => handleDecline(row.email)}> <CloseIcon /> </IconButton>
                             
 
                             </Box>

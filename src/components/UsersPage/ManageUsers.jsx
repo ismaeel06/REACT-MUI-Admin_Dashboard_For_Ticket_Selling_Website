@@ -40,7 +40,6 @@ const Example = (props) => {
 
   const handleDelete = useCallback(async (email) => {
     if (window.confirm('Are you sure you want to delete this user?')) { 
-    console.log(userArray[0])
     try{
     const user = userArray[0].find((user) => user.email === email);
     console.log(user._id);

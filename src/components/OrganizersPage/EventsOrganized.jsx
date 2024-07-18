@@ -94,7 +94,7 @@ export default function StickyHeadTable(props) {
   };
 
   const filteredRows = rows.filter(row => row.organizer === props.state);
-  console.log(filteredRows.length);
+  // console.log(filteredRows.length);
 
   return (
     <Container disableGutters>

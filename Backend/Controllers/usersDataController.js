@@ -10,6 +10,17 @@ const getUsersData = asyncHandler(async (req, res) => {
     res.status(200).json({users: users})
 })
 
+const getUserByEmail = asyncHandler(async (req, res) => {
+    const user = await User.findOne({email: req.params.email})
+    if(user){
+        res.status(200).json({user: user})
+    }
+    else{
+        res.status(404)
+        throw new Error('User not found')
+    }
+})
+
 const createUser = asyncHandler(async (req, res) => {
     const { firstName, lastName, address, city, state, email, password, isAdmin, isOrganizer, created } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10); // Hash the password
@@ -129,4 +140,4 @@ const generateToken = (id) => {
     })
 }
 
-export { getUsersData, createUser, deleteUser, updateUser, loginUser }
+export { getUsersData, getUserByEmail, createUser, deleteUser, updateUser, loginUser }
