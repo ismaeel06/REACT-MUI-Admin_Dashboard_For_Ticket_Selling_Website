@@ -8,6 +8,6 @@ router.get('/', protect, getEventRequests);
 
 router.post('/create', protect, createEventRequest);
 
-router.delete('/', protect, deleteEventRequest);
+router.delete('/:id', protect, deleteEventRequest);
 
 export default router;

@@ -75,7 +75,7 @@ const updateEvent = asynchandler(async (req, res) => {
 const deleteEvent = asynchandler(async (req, res) => {
     const event = await Event.findById(req.params.id);
     if (event) {
-        await event.remove();
+        await event.deleteOne({_id: req.params.id});
         res.status(200).json({ message: 'Event removed' });
     } else {
         res.status(404);

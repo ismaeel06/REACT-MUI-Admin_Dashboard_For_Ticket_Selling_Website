@@ -32,18 +32,14 @@ const createEventRequest = asynchandler(async (req, res) => {
 });
 
 const deleteEventRequest = asynchandler(async (req, res) => {
-    let eventRequest;
-
-    if (req.query.eventName) {
-        eventRequest = await EventRequest.findOneAndDelete({ eventName: req.query.eventName });
-    } else if (req.params.id) {
-        eventRequest = await EventRequest.findByIdAndDelete(req.params.id);
+    const eventRequest = await EventRequest.findById(req.params.id);
+    if (eventRequest) {
+        await eventRequest.deleteOne({ _id: req.params.id });
+        res.status(200).json({ message: 'Event request deleted' });
     } else {
         res.status(404);
         throw new Error('Event request not found');
-        return;
     }
-    res.status(200).json({ message: 'Event request deleted' });
 });
 
 export { getEventRequests, createEventRequest, deleteEventRequest };
