@@ -1,11 +1,20 @@
-import React from 'react'
-import { Box, Container,Typography,Grid } from '@mui/material'
+import React,{useState} from 'react'
+import { Box, Container,Typography,Grid,Tab,Tabs } from '@mui/material'
 import EventsCardBig from '../components/EventPage/Cards/EventsCardBig'
 import EventsListedGraph from '../components/EventPage/Cards/EventsListedGraph'
 import RevenuePie from '../components/EventPage/Cards/RevenuePie'
 import EventRequests from '../components/EventPage/EventRequests'
+import UpcomingEvents from '../components/EventPage/UpcomingEvents'
 
 const EventsPage = () => {
+
+  const [active, setActive] = useState(0);
+
+  const handleTabChange = (event, newValue) => {
+    setActive(newValue);
+  };
+
+
   const LineData = {
     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
     datasets: [
@@ -126,7 +135,7 @@ const EventsPage = () => {
 
 
   return (
-    <Container disableGutters sx={{bgcolor:'#EBF4F6',paddingLeft: '235px',paddingRight:'15px',paddingTop:'15px',position:'relative',zIndex:'0'}}>
+    <Container disableGutters sx={{display:'flex',flexDirection:'column',bgcolor:'#EBF4F6',paddingLeft: '235px',paddingRight:'15px',paddingTop:'15px',position:'relative',zIndex:'0',gap:'3rem'}}>
       <Grid container spacing={4} >
         
         <Grid item xs={12} md={6}>
@@ -145,11 +154,29 @@ const EventsPage = () => {
           <Grid item xs={12} md={4} sx={{marginTop:'51px'}}>
             <RevenuePie data={PieData} options={PieOptions} />
           </Grid>
-
-          <Grid item xs={12}>
-            <EventRequests />
-          </Grid>
       </Grid>
+
+      <Grid container direction="column" gap={3}>
+            <Grid item>
+              <Tabs value={active} onChange={handleTabChange} aria-label="organizer tabs" TabIndicatorProps={{ style: { backgroundColor: '#088395' } }}>
+                <Tab label="Event Requests" sx={{ '&.Mui-selected': { color: '#071952' } }} />
+                <Tab label="Upcoming Events" sx={{ '&.Mui-selected': { color: '#071952' } }} />
+              </Tabs>
+            </Grid>
+    
+            {active === 0 && (
+              <Grid item sx={{ paddingRight: '20px', paddingLeft: '10px' }}>
+                <EventRequests />
+              </Grid>
+            )}
+    
+            {active === 1 && (
+              <Grid item sx={{ paddingRight: '20px', paddingLeft: '10px' }}>
+                <UpcomingEvents />
+              </Grid>
+            )}
+          </Grid>
+
     </Container>
   );
 };
