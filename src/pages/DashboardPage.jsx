@@ -11,6 +11,25 @@ import { selectUsers } from '../app/slices/usersTableSlice'
 
 const DashboardPage = () => {
 
+  const [organizersCount, setOrganizersCount] = useState(0)
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try{
+      const { data } = await axios.get('http://localhost:5000/api/users',
+        {
+          headers: {Authorization: `Bearer ${localStorage.getItem('token')}`}
+        }
+      )
+      const filteredData = data.users.filter(user => user.isOrganizer === true)
+      setOrganizersCount(filteredData.length)
+    } catch (error) {
+      console.log(error)
+    }    
+    };
+    fetchUsers();
+  }, [])
+
 
   const getLastSixMonths = () => {
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -327,7 +346,7 @@ const TotalRevenueOptions = {
         <DashboardCardSmall image='/images/EventsOrganized.svg' title={<p style={{margin:'0',lineHeight:'1'}}>Events<br/>Organized</p>} value='116' />
       </Grid>
       <Grid item xs={12} md={4}>
-        <DashboardCardSmall image='/images/TotalEventOrganizers.svg' title={<p style={{margin:'0',lineHeight:'1'}}>Total Events<br/>Organizers</p>} value='26' />
+        <DashboardCardSmall image='/images/TotalEventOrganizers.svg' title={<p style={{margin:'0',lineHeight:'1'}}>Total Events<br/>Organizers</p>} value={organizersCount} />
       </Grid>
       <Grid item xs={12} md={4}>
         <DashboardCardSmall image='/images/TotalTicketsSold.svg' title={<p style={{margin:'0',lineHeight:'1'}}>Total Tickets<br/>Sold</p>} value='42,000' />
